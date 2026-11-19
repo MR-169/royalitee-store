@@ -1,4 +1,4 @@
-const API_BASE = 'https://anteater-alienate-cylinder.ngrok-free.dev/api';
+const API_BASE = ' https://causes-nov-numerical-joint.trycloudflare.com.trycloudflare.com/api';
 
 const RoyalApi = {
   getToken() {
