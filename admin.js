@@ -1,5 +1,5 @@
 const $ = (s) => document.querySelector(s);
-const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c]));
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const tk = (n) => '৳' + Number(n || 0).toLocaleString('en-IN');
 
 let T = localStorage.getItem('at');
@@ -201,30 +201,23 @@ async function ost(id, v) {
 
 // ===== v3 admin: loader, product add/edit (buy price, old price, spec rows), reviews, offers, profit =====
 let ldN = 0, editId = null;
-const BASE_URL = (typeof API_BASE !== 'undefined' && API_BASE) ? API_BASE : '/api';
-
 function loading(on, msg) {
   const el = $('#ld');
   if (on) { ldN++; $('#ldm').textContent = msg || 'Loading…'; el.classList.add('on'); }
   else { ldN = Math.max(0, ldN - 1); if (!ldN) el.classList.remove('on'); }
 }
-
 async function api(p, o = {}) {
   const { loader, ...rest } = o;
   let shown = false;
   const timer = setTimeout(() => { shown = true; loading(true, loader); }, loader ? 0 : 350);
   try {
-    const r = await fetch(BASE_URL + p, {
+    const r = await fetch('/api' + p, {
       ...rest,
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true',
-        ...(T ? { Authorization: 'Bearer ' + T } : {})
-      },
+      headers: { 'Content-Type': 'application/json', ...(T ? { Authorization: 'Bearer ' + T } : {}) },
       body: rest.body ? JSON.stringify(rest.body) : undefined,
     });
     const d = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(d.message || d.error || 'Failed');
+    if (!r.ok) throw new Error(d.message || 'Failed');
     return d;
   } finally { clearTimeout(timer); if (shown) loading(false); }
 }
