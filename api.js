@@ -1,4 +1,4 @@
-const API_BASE = 'https://anteater-alienate-cylinder.ngrok-free.dev.ngrok-free.app/api';
+const API_BASE = 'https://anteater-alienate-cylinder.ngrok-free.dev/api';
 
 const RoyalApi = {
   getToken() {
