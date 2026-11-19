@@ -1,4 +1,4 @@
-const API_BASE = ' https://causes-nov-numerical-joint.trycloudflare.com.trycloudflare.com/api';
+const API_BASE = 'https://causes-nov-numerical-joint.trycloudflare.com.trycloudflare.com/api';
 
 const RoyalApi = {
   getToken() {
@@ -18,11 +18,7 @@ const RoyalApi = {
   },
 
   async request(endpoint, options = {}) {
-    const headers = {
-      'Content-Type': 'application/json',
-      'ngrok-skip-browser-warning': 'true',
-      ...(options.headers || {})
-    };
+    const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
     const token = this.getToken();
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
